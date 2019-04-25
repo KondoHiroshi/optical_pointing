@@ -11,7 +11,7 @@ time1 = time.ctime()
 time2 = time.strptime(time1)
 time3 = time.strftime('%Y%m%d_H.%M.%S', time2)
 
-savedir_pre = '/home/1p85m/evaluation/optical_pointing/test/fig/'
+savedir_pre = '/home/telescope/optical_pointing_image/'
 HOST = '192.168.100.55'
 PORT = 50000
 
