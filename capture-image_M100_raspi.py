@@ -63,7 +63,7 @@ while True:
     #print("byte",len(bytes))
     #bytes += "¥n"
     #_file = open("/home/1p85m/evaluation/optical_pointing/test/fig/test3.jpg", "wg")
-    _file.write(bytes)
-    _file.close()
+    #_file.write(bytes)
+    #_file.close()
     #conn.send(str(len(bytes)))
     conn.send(bytes)
