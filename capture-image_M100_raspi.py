@@ -58,11 +58,11 @@ while True:
     time3 = time.strftime('%Y%m%d_H.%M.%S', time2)
     imagename = time3 + ".txt"
     ret = capture(savedir, imagename)
-    #byte = open("%s%s"%(savedir, imagename)).read()
-    bytes = open("/home/1p85m/evaluation/optical_pointing/test/fig/20181124_09.05.28/2018.11.24-09.05.48.jpg").read()
-    print("byte",len(bytes))
-    bytes += "¥n"
-    _file = open("/home/1p85m/evaluation/optical_pointing/test/fig/test3.jpg", "wg")
+    bytes = open("%s%s"%(savedir, imagename)).read()
+    #bytes = open("/home/1p85m/evaluation/optical_pointing/test/fig/20181124_09.05.28/2018.11.24-09.05.48.jpg").read()
+    #print("byte",len(bytes))
+    #bytes += "¥n"
+    #_file = open("/home/1p85m/evaluation/optical_pointing/test/fig/test3.jpg", "wg")
     _file.write(bytes)
     _file.close()
     #conn.send(str(len(bytes)))
