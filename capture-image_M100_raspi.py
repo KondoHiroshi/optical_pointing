@@ -12,7 +12,7 @@ time2 = time.strptime(time1)
 time3 = time.strftime('%Y%m%d_H.%M.%S', time2)
 
 savedir_pre = '/home/1p85m/evaluation/optical_pointing/test/fig/'
-HOST = '192.168.100.12'
+HOST = '192.168.100.55'
 PORT = 50000
 
 def capture(savedir, imagename):
