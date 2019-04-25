@@ -56,7 +56,7 @@ while True:
     time1 = time.ctime()
     time2 = time.strptime(time1)
     time3 = time.strftime('%Y%m%d_H.%M.%S', time2)
-    imagename = time3 + ".txt"
+    imagename = time3 + ".jpg"
     ret = capture(savedir, imagename)
     #bytes = open("%s%s"%(savedir, imagename)).read()
     #bytes = open("/home/1p85m/evaluation/optical_pointing/test/fig/20181124_09.05.28/2018.11.24-09.05.48.jpg").read()
