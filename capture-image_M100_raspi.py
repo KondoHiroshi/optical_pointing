@@ -6,6 +6,9 @@ import sys
 import time
 import socket
 import gphoto2 as gp
+from PIL import Image
+from io import BytesIO
+import numpy
 
 time1 = time.ctime()
 time2 = time.strptime(time1)
@@ -37,6 +40,9 @@ def capture(savedir, imagename):
     # subprocess.call(["xdg-open", target])
     gp.check_result(gp.gp_camera_exit(camera))
 
+
+
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST, PORT))
 s.listen(1)
@@ -46,24 +52,58 @@ time2 = time.strptime(time1)
 time3 = time.strftime('%Y%m%d_H.%M.%S', time2)
 savedir = savedir_pre + time3
 os.mkdir(savedir)
+os.chdir(savedir)
 print("server is listening for connections")
 
 while True:
     conn, addr = s.accept()
     print("connected")
-    #data = conn.recv(1024)
-    #print("(server) data=", data)
+
     time1 = time.ctime()
     time2 = time.strptime(time1)
     time3 = time.strftime('%Y%m%d_H.%M.%S', time2)
     imagename = time3 + ".jpg"
     ret = capture(savedir, imagename)
-    #bytes = open("%s%s"%(savedir, imagename)).read()
-    #bytes = open("/home/1p85m/evaluation/optical_pointing/test/fig/20181124_09.05.28/2018.11.24-09.05.48.jpg").read()
-    #print("byte",len(bytes))
-    #bytes += "¥n"
-    #_file = open("/home/1p85m/evaluation/optical_pointing/test/fig/test3.jpg", "wg")
-    #_file.write(bytes)
-    #_file.close()
-    #conn.send(str(len(bytes)))
-    #conn.send(bytes)
+
+    img = open(imagename,"rb").read()
+    s.send(img)
+
+"""
+
+##pc2
+import socket
+from PIL import Image
+import numpy
+from io import BytesIO
+
+soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+soc.connect(("localhost", 50009))
+data_sum = b''
+while True:
+    data = soc.recv(5000) #1024バイトづつ分割して受信する
+    data_sum = data_sum + data #受信した分だけ足していく
+    print("0")
+    if len(data) < 5000 : #どのようにデータを全て受信したかどうか判断すればよいか分からない
+        break
+
+bytesimg = BytesIO(data_sum)
+img = Image.open(bytesimg)
+img.save("test2.jpg","JPEG")
+
+
+###raspi
+
+import socket
+from PIL import Image
+import numpy
+imagename = "DSC00658.JPG"
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind(("localhost", 50009))    # 指定したホスト(IP)とポートをソケットに設定
+s.listen(1)                  # 1つの接続要求を待つ
+soc, addr = s.accept()          # 要求が来るまでブロック
+print("Conneted by"+str(addr))  #サーバ側の合図
+
+img = open("DSC00658.JPG","rb").read()
+soc.send(img)              # ソケットにデータを送信
+"""
